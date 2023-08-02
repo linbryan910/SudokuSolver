@@ -188,4 +188,17 @@ public class SudokuBoard{
             Console.WriteLine();
         }
     }
+
+    public void checkDoubleValidValues_Row(int row){
+        for(int i = 0; i < 9; i ++){
+            if(board[row,i].getValidValues().Count != 2){
+                continue;
+            }
+            for(int j = i + 1; j < 9; j ++){
+                if(board[row,i].getValidValues().Count == 2){
+
+                }
+            }
+        }
+    }
 }
