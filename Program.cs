@@ -22,7 +22,7 @@ class Program{
 
             if(filledSquares == puzzle.getSolvedSquares()){
                 Console.WriteLine("This Sudoku Puzzle can't be solved using the cross hatching method");
-                puzzle.printBoard();
+                puzzle.printFullBoard();
                 return;
             }
         }
@@ -170,5 +170,22 @@ public class SudokuBoard{
             Console.WriteLine();
         }
         Console.WriteLine();
+    }
+
+    // Outputs board and all possible values for each empty square
+    // (Only for programming/debugging purposes)
+    public void printFullBoard(){
+        for(int i = 0; i < 9; i ++){
+            for(int j = 0; j < 9; j ++){
+                if(board[i,j].getValue() != 0){
+                    Console.WriteLine(board[i,j].getValue());
+                }
+                else{
+                    Console.Write(board[i,j].getValue() + " - ");
+                    Console.WriteLine(String.Join(" ", board[i,j].getValidValues()));
+                }
+            }
+            Console.WriteLine();
+        }
     }
 }
