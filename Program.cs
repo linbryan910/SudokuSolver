@@ -21,7 +21,7 @@ class Program{
             puzzle.scanBoardForSingleValue();
 
             if(filledSquares == puzzle.getSolvedSquares()){
-                Console.WriteLine("This Sudoku Puzzle can't be solved using the cross hatchingi method");
+                Console.WriteLine("This Sudoku Puzzle can't be solved using the cross hatching method");
                 puzzle.printBoard();
                 return;
             }
