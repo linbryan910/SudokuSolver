@@ -61,6 +61,7 @@ public class SudokuSquare{
         }
 
         value = newValue;
+        validValues.Clear();
         return 1;
     }
 
