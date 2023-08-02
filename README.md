@@ -13,3 +13,6 @@ Add feature to read in input from formatted text file
 
 Test Puzzles: 
 030200000080009064002040800070010008001308500500020040004060300950100080000004090
+
+Current To-Do:
+ - Work on checkDoubleValidValues_Row method

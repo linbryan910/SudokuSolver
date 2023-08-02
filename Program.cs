@@ -61,6 +61,7 @@ public class SudokuSquare{
         }
 
         value = newValue;
+        validValues.Clear();
         return 1;
     }
 
@@ -72,6 +73,10 @@ public class SudokuSquare{
     // Crosses off a possible value for this square
     public void removeValidValue(int invalid){
         validValues.Remove(invalid);
+    }
+
+    public int getValidValuesCount(){
+        return validValues.Count;
     }
 }
 
@@ -189,14 +194,23 @@ public class SudokuBoard{
         }
     }
 
+    // Checks for a scenario where a row contains 2 squares that have the same 2 possible values
+    // As they both can only be 1 value, other squares in the row can't be those values
     public void checkDoubleValidValues_Row(int row){
         for(int i = 0; i < 9; i ++){
-            if(board[row,i].getValidValues().Count != 2){
+            if(board[row,i].getValidValuesCount() != 2){
                 continue;
             }
             for(int j = i + 1; j < 9; j ++){
-                if(board[row,i].getValidValues().Count == 2){
-
+                if(board[row,j].getValidValuesCount() == 2){
+                    // Compare the two validValues lists
+                    if(board[row,i].getValidValues().Except(board[row,j].getValidValues()).ToList().Count == 0 && board[row,j].getValidValues().Except(board[row,i].getValidValues()).ToList().Count == 0){
+                        // Removes both values in the valid values lists from the row
+                        for(int k = 0; k < 9 && k != i && k != j; k ++){
+                            board[row,k].removeValidValue(board[row,i].getValidValues()[0]);
+                            board[row,k].removeValidValue(board[row,i].getValidValues()[1]);
+                        }
+                    }
                 }
             }
         }
