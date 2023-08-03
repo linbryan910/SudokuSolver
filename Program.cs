@@ -21,8 +21,11 @@ class Program{
             puzzle.checkNakedPairs();
             puzzle.scanBoardForSingleValue();
 
+            // If the sudoku puzzle can't be solved
             if(filledSquares == puzzle.getSolvedSquares()){
+                Console.WriteLine();
                 Console.WriteLine("This Sudoku Puzzle can't be solved using the cross hatching or naked pair method");
+                Console.WriteLine();
                 puzzle.printBoard();
                 return;
             }
@@ -31,6 +34,9 @@ class Program{
         }
 
         // Outputs board after done
+        Console.WriteLine();
+        Console.WriteLine("The sudoku puzzle has been solved");
+        Console.WriteLine();
         puzzle.printBoard();
     }
 }
@@ -174,9 +180,18 @@ public class SudokuBoard{
     public void printBoard(){
         for(int i = 0; i < 9; i ++){
             for(int j = 0; j < 9; j ++){
-                Console.Write(board[i,j].getValue());
+                if(board[i,j].getValue() == 0)
+                    Console.Write(". ");
+                else
+                    Console.Write(board[i,j].getValue() + " ");
+
+                if(j == 2 || j == 5)
+                    Console.Write("| ");
             }
             Console.WriteLine();
+
+            if(i == 2 || i == 5)
+                Console.WriteLine("----------------------");
         }
         Console.WriteLine();
     }
