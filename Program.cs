@@ -180,7 +180,10 @@ public class SudokuBoard{
     public void printBoard(){
         for(int i = 0; i < 9; i ++){
             for(int j = 0; j < 9; j ++){
-                Console.Write(board[i,j].getValue() + " ");
+                if(board[i,j].getValue() == 0)
+                    Console.Write(". ");
+                else
+                    Console.Write(board[i,j].getValue() + " ");
 
                 if(j == 2 || j == 5)
                     Console.Write("| ");
