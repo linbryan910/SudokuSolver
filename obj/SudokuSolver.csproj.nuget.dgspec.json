@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mihay\\OneDrive\\Documents\\progression\\dotnet\\SudokuSolver\\SudokuSolver.csproj": {}
+    "c:\\Users\\mihay\\OneDrive\\Documents\\progression\\dotnet\\SudokuSolver\\SudokuSolver.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mihay\\OneDrive\\Documents\\progression\\dotnet\\SudokuSolver\\SudokuSolver.csproj": {
+    "c:\\Users\\mihay\\OneDrive\\Documents\\progression\\dotnet\\SudokuSolver\\SudokuSolver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mihay\\OneDrive\\Documents\\progression\\dotnet\\SudokuSolver\\SudokuSolver.csproj",
+        "projectUniqueName": "c:\\Users\\mihay\\OneDrive\\Documents\\progression\\dotnet\\SudokuSolver\\SudokuSolver.csproj",
         "projectName": "SudokuSolver",
-        "projectPath": "C:\\Users\\mihay\\OneDrive\\Documents\\progression\\dotnet\\SudokuSolver\\SudokuSolver.csproj",
+        "projectPath": "c:\\Users\\mihay\\OneDrive\\Documents\\progression\\dotnet\\SudokuSolver\\SudokuSolver.csproj",
         "packagesPath": "C:\\Users\\mihay\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mihay\\OneDrive\\Documents\\progression\\dotnet\\SudokuSolver\\obj\\",
+        "outputPath": "c:\\Users\\mihay\\OneDrive\\Documents\\progression\\dotnet\\SudokuSolver\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mihay\\AppData\\Roaming\\NuGet\\NuGet.Config"
