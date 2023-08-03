@@ -15,16 +15,19 @@ class Program{
         puzzle.inputString(input);
         puzzle.setValidValuesForEachSquare();
 
-        // Fills out each square one by one using cross hatching method
+        // Fills out each square one by one using cross hatching  and naked pair method
         int filledSquares = puzzle.getSolvedSquares();
         while(puzzle.getSolvedSquares() < 81){
+            puzzle.checkNakedPairs();
             puzzle.scanBoardForSingleValue();
 
             if(filledSquares == puzzle.getSolvedSquares()){
-                Console.WriteLine("This Sudoku Puzzle can't be solved using the cross hatching method");
-                puzzle.printFullBoard();
+                Console.WriteLine("This Sudoku Puzzle can't be solved using the cross hatching or naked pair method");
+                puzzle.printBoard();
                 return;
             }
+
+            filledSquares = puzzle.getSolvedSquares();
         }
 
         // Outputs board after done
@@ -142,15 +145,16 @@ public class SudokuBoard{
         }
     }
 
-    // Searches the board for an empty square that can only have 1 possible value and fills it in
+    // Searches the board for an empty square that can only have 1 possible value and fills it in (Cross hatching method)
     public void scanBoardForSingleValue(){
         for(int i = 0; i < 9; i ++){
             for(int j = 0; j < 9; j ++){
-                if(board[i,j].getValue() == 0 && board[i,j].getValidValues().Count == 1){
-                    board[i,j].setValue(board[i,j].getValidValues()[0]);
+                if(board[i,j].getValue() == 0 && board[i,j].getValidValuesCount() == 1){
+                    int newValue = board[i,j].getValidValues()[0];
+                    board[i,j].setValue(newValue);
                     solvedSquares ++;
 
-                    int elimValue = board[i,j].getValidValues()[0];
+                    int elimValue = newValue;
 
                     elimRow(elimValue, i);
                     elimColumn(elimValue, j);
@@ -194,25 +198,109 @@ public class SudokuBoard{
         }
     }
 
-    // Checks for a scenario where a row contains 2 squares that have the same 2 possible values
-    // As they both can only be 1 value, other squares in the row can't be those values
-    public void checkDoubleValidValues_Row(int row){
+    // Checks for a naked pair in a row
+    public void checkNakedPair_Row(int row){
+        // Goes through row
         for(int i = 0; i < 9; i ++){
-            if(board[row,i].getValidValuesCount() != 2){
+            
+            // If valid values list doesn't have exactly 2 values, skip
+            if(board[row,i].getValidValuesCount() != 2)
                 continue;
-            }
+
             for(int j = i + 1; j < 9; j ++){
-                if(board[row,j].getValidValuesCount() == 2){
-                    // Compare the two validValues lists
-                    if(board[row,i].getValidValues().Except(board[row,j].getValidValues()).ToList().Count == 0 && board[row,j].getValidValues().Except(board[row,i].getValidValues()).ToList().Count == 0){
-                        // Removes both values in the valid values lists from the row
-                        for(int k = 0; k < 9 && k != i && k != j; k ++){
-                            board[row,k].removeValidValue(board[row,i].getValidValues()[0]);
-                            board[row,k].removeValidValue(board[row,i].getValidValues()[1]);
+                // If 2nd valid values list doesn't have exactly 2 values, skip
+                if(board[row,j].getValidValuesCount() != 2)
+                    continue;
+                    
+                // If the 2 valid values lists don't match, skip
+                if(board[row,i].getValidValues().Except(board[row,j].getValidValues()).ToList().Count != 0 || board[row,j].getValidValues().Except(board[row,i].getValidValues()).ToList().Count != 0)
+                    continue;
+                
+                // Removes naked pair from other squares in row
+                for(int k = 0; k < 9; k ++){
+                    if(k == i || k == j)
+                        continue;
+
+                    board[row,k].removeValidValue(board[row,i].getValidValues()[0]);
+                    board[row,k].removeValidValue(board[row,i].getValidValues()[1]);
+                }
+            }
+        }
+    }
+
+    // Checks for a naked pair in a column
+    public void checkNakedPair_Column(int column){
+        // Goes through column
+        for(int i = 0; i < 9; i ++){
+            
+            // If valid values list doesn't have exactly 2 values, skip
+            if(board[i,column].getValidValuesCount() != 2)
+                continue;
+
+            for(int j = i + 1; j < 9; j ++){
+                // If 2nd valid values list doesn't have exactly 2 values, skip
+                if(board[j,column].getValidValuesCount() != 2)
+                    continue;
+                    
+                // If the 2 valid values lists don't match, skip
+                if(board[i,column].getValidValues().Except(board[j,column].getValidValues()).ToList().Count != 0 || board[j,column].getValidValues().Except(board[i,column].getValidValues()).ToList().Count != 0)
+                    continue;
+                
+                // Removes naked pair from other squares in column
+                for(int k = 0; k < 9; k ++){
+                    if(k == i || k == j)
+                        continue;
+
+                    board[k,column].removeValidValue(board[i,column].getValidValues()[0]);
+                    board[k,column].removeValidValue(board[i,column].getValidValues()[1]);
+                }
+            }
+        }
+    }
+
+    // Checks for a naked pair in a box
+    public void checkNakedPair_Box(int box){
+        for(int i = 0; i < 3; i ++){
+            for(int j = 0; j < 3; j ++){
+                // If valid values list doesn't have exactly 2 values, skip
+                if(board[(3*(box/3)) + i, (3*(box%3)) + j].getValidValuesCount() != 2){
+                    continue;
+                }
+                
+                for(int k = 0; k < 3 && k != i; k ++){
+                    for(int l = 0; l < 3 && l != j; l ++){
+                        // If 2nd valid values list doesn't have exactly 2 values, skip
+                        if(board[(3*(box/3)) + k, (3*(box%3)) + l].getValidValuesCount() != 2){
+                            continue;
+                        }
+
+                        // If the 2 valid values lists don't match, skip
+                        if(board[(3*(box/3)) + i, (3*(box%3)) + j].getValidValues().Except(board[(3*(box/3)) + k, (3*(box%3)) + l].getValidValues()).ToList().Count != 0 || board[(3*(box/3)) + k, (3*(box%3)) + l].getValidValues().Except(board[(3*(box/3)) + i, (3*(box%3)) + j].getValidValues()).ToList().Count != 0){
+                            continue;
+                        }
+
+                        // Removes naked pair from other squares in box
+                        for(int m = 0; m < 3; m ++){
+                            for(int n = 0; n < 3; n ++){
+                                if((m == i && n == j) || (m == k && n == l))
+                                    continue;
+
+                                board[(3*(box/3)) + m, (3*(box%3)) + n].removeValidValue(board[(3*(box/3)) + i, (3*(box%3)) + j].getValidValues()[0]);
+                                board[(3*(box/3)) + m, (3*(box%3)) + n].removeValidValue(board[(3*(box/3)) + i, (3*(box%3)) + j].getValidValues()[1]);
+                            }
                         }
                     }
                 }
             }
+        }
+    }
+
+    // Checks for naked pairs in all rows, columns, and boxes
+    public void checkNakedPairs(){
+        for(int i = 0; i < 9; i ++){
+            checkNakedPair_Row(i);
+            checkNakedPair_Column(i);
+            checkNakedPair_Box(i);
         }
     }
 }
