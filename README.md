@@ -16,5 +16,3 @@ This program was written in C# using .NET.
 More features will be added to this program in the future (which will allow it to solve more difficult puzzles and make it more convenient/efficient).
 
 To-Do:
- - Add feature to read in input from formatted text file (Or easily input puzzle and can easily check that puzzle is entered correctly)
- - Make printing out the puzzle also really easy to read
