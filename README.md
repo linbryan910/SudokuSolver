@@ -4,6 +4,11 @@ This program solves a sudoku puzzle using:
  - the cross hatching method
  - the naked pairs method
 
+Cross hatching method: 
+    When you find that a value fits in a square because it hasn't been used in the box and it is used in the other rows and columns that intersect with the box
+Naked pairs method:
+    When you find two squares in the same row, column, or box that have the same 2 possible values, so you can eliminate those values from the squares in the other rows, columns, or boxes respectively
+
 With the cross hatching and naked pairs methods implemented, this sudoku solver is able to solve easy to intermediate puzzles. 
 
 This program was written in C# using .NET. 
@@ -12,5 +17,4 @@ More features will be added to this program in the future (which will allow it t
 
 To-Do:
  - Add feature to read in input from formatted text file (Or easily input puzzle and can easily check that puzzle is entered correctly)
- - Explain what cross hatching and naked pair techniques are on readme.md
  - Make printing out the puzzle also really easy to read
