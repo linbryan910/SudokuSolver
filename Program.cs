@@ -3,16 +3,33 @@
 // Main method
 class Program{
     public static void Main(String[] args){
-        // Read in puzzle as input
-        Console.WriteLine("Enter the digits of the sodoku puzzle from left to right then up and down, replacing the empty squares with zeros:");
-        String input = Console.ReadLine();
-        if(input == null){
+        if(args.Length == 0){
+            Console.WriteLine("Please enter an argument for the puzzle input method (f for file input and c for console input)");
             return;
         }
 
-        // Initializes sudoku puzzle solver
         SudokuBoard puzzle = new SudokuBoard();
-        puzzle.inputString(input);
+
+        // Reads in file name with puzzle
+        if(args[0] == "f"){
+            Console.WriteLine("Enter the file with the sudoku puzzle");
+            String inputFile = Console.ReadLine();
+            if(inputFile == null)
+                return;
+
+            puzzle.inputFile(inputFile);
+        }
+        // Read in puzzle as input
+        else if(args[0] == "c"){
+            Console.WriteLine("Enter the digits of the sodoku puzzle from left to right then up and down, replacing the empty squares with zeros:");
+            String input = Console.ReadLine();
+            if(input == null)
+                return;
+
+            puzzle.inputString(input);
+        }
+
+        // Finished initialization of sudoku puzzlbe board
         puzzle.setValidValuesForEachSquare();
 
         // Fills out each square one by one using cross hatching  and naked pair method
@@ -112,6 +129,18 @@ public class SudokuBoard{
         }
 
         return 1;
+    }
+
+    // Reads in sudoku board and sets values
+    public void inputFile(String filename){
+        String[] input = File.ReadAllLines(filename);
+        
+        for(int i = 0; i < 9; i ++){
+            String currRow = input[i];
+            for(int j = 0; j < 9; j ++){
+                board[i, j] = new SudokuSquare(Int32.Parse(currRow.Substring(j, 1)));
+            }
+        }
     }
 
     // Eliminates all impossible values for each empty square
