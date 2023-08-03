@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "x2gFT7BpMOvSYkheJZEtcJ6+Y8nof9yiENoLL2zozCFEKWdo6P5yGOCKRe6xuyFTrkKlA8VvIQ2SlF7Lroyo2g==",
+  "dgSpecHash": "QdF8NepAhAGGHhM3RTMOjSpyES2VP6irhtbjS/g6UTNYXQbBy/YOsmbEqQ3uvzhyE52vCn+i7gVI5DMH3XEUTw==",
   "success": true,
-  "projectFilePath": "c:\\Users\\mihay\\OneDrive\\Documents\\progression\\dotnet\\SudokuSolver\\SudokuSolver.csproj",
+  "projectFilePath": "C:\\Users\\mihay\\OneDrive\\Documents\\progression\\dotnet\\SudokuSolver\\SudokuSolver.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
