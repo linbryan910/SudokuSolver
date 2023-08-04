@@ -32,10 +32,11 @@ class Program{
         // Finished initialization of sudoku puzzlbe board
         puzzle.setValidValuesForEachSquare();
 
-        // Fills out each square one by one using cross hatching  and naked pair method
+        // Fills out each square
         int filledSquares = puzzle.getSolvedSquares();
         while(puzzle.getSolvedSquares() < 81){
             puzzle.checkNakedPairs();
+            puzzle.checkAssertions();
             puzzle.scanBoardForSingleValue();
 
             // If the sudoku puzzle can't be solved
@@ -345,6 +346,91 @@ public class SudokuBoard{
             checkNakedPair_Row(i);
             checkNakedPair_Column(i);
             checkNakedPair_Box(i);
+        }
+    }
+
+    // Checks assertion in a row in the sudoku puzzle
+    public void checkAssertion_Row(int row){
+        // Initializes the dictionary to hold valid values
+        Dictionary<int, int> dict = new Dictionary<int, int>();
+        for(int i = 1; i < 10; i ++)
+            dict[i] = 0;
+
+        // Adds all valid values in the row to the dictionary
+        for(int i = 0; i < 9; i ++)
+            foreach (int j in board[row,i].getValidValues())
+                dict[j] = dict[j] + 1;
+
+        // If there is only 1 copy of a valid value in the row, set that square to that value
+        // Then removes that value from all valid value lists in its column and box
+        foreach (int i in dict.Keys)
+            if(dict[i] == 1)
+                for(int j = 0; j < 9; j ++)
+                    if(board[row,j].getValidValues().Contains(i)){
+                        board[row,j].setValue(i);
+                        solvedSquares ++;
+                        elimColumn(i, j);
+                        elimBox(i, (row/3) * 3 + (j/3));
+                    }
+    }
+
+    // Checks assertion in a column in the sudoku puzzle
+    public void checkAssertion_Column(int column){
+        // Initializes the dictionary to hold valid values
+        Dictionary<int, int> dict = new Dictionary<int, int>();
+        for(int i = 1; i < 10; i ++)
+            dict[i] = 0;
+
+        // Adds all valid values in the column to the dictionary
+        for(int i = 0; i < 9; i ++)
+            foreach (int j in board[i,column].getValidValues())
+                dict[j] = dict[j] + 1;
+
+        // If there is only 1 copy of a valid value in the column, set that square to that value
+        // Then removes that value from all valid value lists in its row and box
+        foreach (int i in dict.Keys)
+            if(dict[i] == 1)
+                for(int j = 0; j < 9; j ++)
+                    if(board[j,column].getValidValues().Contains(i)){
+                        board[j,column].setValue(i);
+                        solvedSquares ++;
+                        elimRow(i, j);
+                        elimBox(i, (j/3) * 3 + (column/3));
+                    }
+    }
+
+    // Checks assertion in a box in the sudoku puzzle
+    public void checkAssertion_Box(int box){
+        // Initializes the dictionary to hold valid values
+        Dictionary<int, int> dict = new Dictionary<int, int>();
+        for(int i = 1; i < 10; i ++)
+            dict[i] = 0;
+
+        // Adds all valid values in the box to the dictionary
+        for(int i = 0; i < 3; i ++)
+            for(int j = 0; j < 3; j ++)
+                foreach(int k in board[(3*(box/3)) + i, (3*(box%3)) + j].getValidValues())
+                    dict[k] = dict[k] + 1;
+
+        // If there is only 1 copy of a valid value in the box, set that square to that value
+        // Then removes that value from all valid value lists in its row and column
+        foreach (int i in dict.Keys)
+            if(dict[i] == 1)
+                for(int j = 0; j < 3; j ++)
+                    for(int k = 0; k < 3; k ++)
+                        if(board[(3*(box/3)) + j, (3*(box%3)) + k].getValidValues().Contains(i)){
+                            board[(3*(box/3)) + j, (3*(box%3)) + k].setValue(i);
+                            solvedSquares ++;
+                            elimRow(i, (3*(box/3)) + j);
+                            elimColumn(i, (3*(box%3)) + k);
+                        }
+    }
+
+    public void checkAssertions(){
+        for(int i = 0; i < 9; i ++){
+            checkAssertion_Row(i);
+            checkAssertion_Column(i);
+            checkAssertion_Box(i);
         }
     }
 }
