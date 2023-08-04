@@ -7,8 +7,10 @@ This program solves a sudoku puzzle using:
 
 Cross hatching method: 
     When you find that a value fits in a square because it hasn't been used in the box and it is used in the other rows and columns that intersect with the box
+
 Naked pairs method:
     When you find two squares in the same row/column/box that have the same 2 possible values, so you can eliminate those values from the squares in the other rows/columns/boxes respectively
+
 Assertion method:
     When you have only one square in a row/column/box that can possibly have a certain value and then set that square as that value
 
