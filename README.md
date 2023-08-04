@@ -15,4 +15,7 @@ This program was written in C# using .NET.
 
 More features will be added to this program in the future (which will allow it to solve more difficult puzzles and make it more convenient/efficient).
 
+Input.txt is an example input file with a sudoku puzzle
+
 To-Do:
+    Update Program.cs to have Pascal Case
