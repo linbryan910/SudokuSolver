@@ -18,3 +18,4 @@ More features will be added to this program in the future (which will allow it t
 Input.txt is an example input file with a sudoku puzzle
 
 To-Do:
+    Update Program.cs to have Pascal Case
